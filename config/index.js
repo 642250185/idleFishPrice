@@ -2,13 +2,32 @@ const path = require('path');
 
 const config = {
     xy: {
-        domain: 'https://www.duozhuayu.com',
+        domain      : 'https://h5api.m.taobao.com',
+
+        baseOpen    : '/h5/mtop.taobao.idle.recycle.nextspunav.get/1.0/',
+        detailsOpen : '/h5/mtop.alibaba.idle.recycle.quote.template/1.0/',
+        priceOpen   : '/h5/mtop.alibaba.idle.recycle.quote.get/1.0/',
+
+        jsv         : '2.4.2',
+
+        baseApi     : 'mtop.taobao.idle.recycle.nextSpuNav.get',
+        detailsApi  : 'mtop.alibaba.idle.recycle.quote.template',
+        priceApi    : 'mtop.alibaba.idle.recycle.quote.get',
+
+        v           : '1.0',
+        ecode       : 1,
+        dataType    : 'originaljsonp',
+        jsonpIncPrefix: 'weexcb',
+        ttid        : '2018%40weex_h5_0.12.12',
+        type        : 'originaljsonp',
+
         category_path: '/api/categories',
         isbnDataPath: path.join(__dirname, '..', 'data/isbn.json'),
         partIsbnDataPath: path.join(__dirname, '..', 'data/partIsbn.json'),
         exportPath: path.join(__dirname, '..', 'download'),
     },
-    cookie: "t=0d2ac9eec09e96c806825db32aa95c53; cna=l/CDE86y82ECAbfp0xYJsnEo; cookie2=10c0e6052577ca04ce8a8ddcf2a339a8; v=0; _tb_token_=e187bb3de6663; munb=1046413522; WAPFDFDTGFG=%2B4cMKKP%2B8PI%2BKKw%2FL7qe51jfSGSrrwxvBTA%3D; _w_app_lg=23; tracknick=taobao642250185; lgc=taobao642250185; dnk=taobao642250185; ntm=0; _m_h5_tk=a801a8161d4e29b444666698250b70da_1535795333199; _m_h5_tk_enc=53ba0484d90dd24b6927808b2859c164; unb=1046413522; sg=523; _l_g_=Ug%3D%3D; cookie1=V3oSAessD8DQaU11Z8kRgU%2BbzUP3vVHut4knOvmCG%2B4%3D; _nk_=taobao642250185; cookie17=UoH7LXdJAJEA2w%3D%3D; ockeqeudmj=pcK2ZM0%3D; skt=774e842b7577ed27; uc1=cookie21=URm48syIYn73&cookie15=VFC%2FuZ9ayeYq2g%3D%3D&cookie14=UoTfLioAO4sOeg%3D%3D; csg=cf8119ba; uc3=vt3=F8dBzrSO7ysZo4KoBc4%3D&id2=UoH7LXdJAJEA2w%3D%3D&nk2=F5fTsrsze6Ghvz8w7D1i&lg2=UtASsssmOIJ0bQ%3D%3D; _cc_=Vq8l%2BKCLiw%3D%3D; isg=BLW1YDRpAv6b3WZCoBCdQ-koxDFlMmP_hBl7kDfacSx7DtUA_4J5FMPPXNQ4ToH8",
+    appKey: "12574478",
+    cookie: "cookie2=1098fd7b45a65d334cffa3fe548d26b7; _m_h5_tk=eeafdc018c27e1113784670ea03e1749_1536037213438; _m_h5_tk_enc=268459a564a5b8e04bd015ec9493574c; sg=523",
     category: {
         phone: 1,
         tablet: 2
