@@ -4,6 +4,7 @@ const request = require('request');
 const config = require('../config');
 const mongoose = require('mongoose');
 const urlencode = require('urlencode');
+const sleep = require('js-sleep/js-sleep');
 const {getSign} = require('../util/signature');
 
 const {domain, detailsOpen, jsv, detailsApi, v, ecode, dataType, jsonpIncPrefix, ttid, type, spuDataPath} = config.xy;
@@ -39,6 +40,7 @@ const getData = (pid) => {
 
 const getDetails = async (pid) => {
     try {
+        await sleep(1000 * 2);
         const result = await getData(pid);
         const {data, ret} = JSON.parse(result);
         if(_.isEmpty(data)){

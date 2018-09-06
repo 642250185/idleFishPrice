@@ -33,11 +33,11 @@ const config = {
         type        : 'originaljsonp',
 
         brandDataPath: path.join(__dirname, '..', 'data/brand.json'),
-        spuDataPath: path.join(__dirname, '..', 'data/spu.json'),
+        spuDataPath: path.join(__dirname, '..', 'data/spu-2.json'),
         exportPath: path.join(__dirname, '..', 'download'),
     },
     appKey: "12574478",
-    cookie: "cookie2=11850dc95b1c7dfcf671d6ef61664750; _m_h5_tk=be78e015b50f7857c47af67df8d8daf3_1536223323815; _m_h5_tk_enc=f92fe2d4e230cec5e3839136cf7fa85a; sg=523",
+    cookie: "cookie2=19eee1d540873af53e615c203e3d7e40; _m_h5_tk=25f349214121758fd26c3c9486d567d9_1536232535536; _m_h5_tk_enc=5b846a46f5aef555f4fa602d3a91bdc5; sg=523",
     /**
      * 返回或设置当前环镜
      */

@@ -4,6 +4,7 @@ const fs = require('fs-extra');
 const request = require('request');
 const config = require('../config');
 const urlencode = require('urlencode');
+const sleep = require('js-sleep/js-sleep');
 const {getSign} = require('../util/signature');
 
 const {domain, baseOpen, jsv, baseApi, v, ecode, dataType, jsonpIncPrefix, ttid, type, brandDataPath, spuDataPath} = config.xy;
@@ -33,6 +34,7 @@ const getData = (bid, pageNumber) => {
 
 const getPrdouct = async (bid, pageNumber, plist) => {
     try {
+        await sleep(1000 * 2);
         if(!pageNumber){
             pageNumber = 1;
             plist = [];
@@ -90,7 +92,7 @@ const getAllPrdouct = async () => {
             console.info(`品牌ID: ${brand.id}、品牌名称: ${brand.name}`);
             const result = await getPrdouct(brand.id);
             final = final.concat(result);
-            break;
+            // break;
         }
         return final;
     } catch (e) {
