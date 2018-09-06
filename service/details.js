@@ -1,39 +1,45 @@
 const _ = require('lodash');
+const fs = require('fs-extra');
 const request = require('request');
 const config = require('../config');
+const mongoose = require('mongoose');
 const urlencode = require('urlencode');
 const {getSign} = require('../util/signature');
 
-const {domain, detailsOpen, jsv, detailsApi, v, ecode, dataType, jsonpIncPrefix, ttid, type} = config.xy;
+const {domain, detailsOpen, jsv, detailsApi, v, ecode, dataType, jsonpIncPrefix, ttid, type, spuDataPath} = config.xy;
 
-// =========== Data =========== //
-const detailsData = "{\"spuId\":\"10283\",\"sceneType\":\"3C\",\"channel\":\"idle\",\"channelData\":\"{\\\"sceneType\\\":\\\"3C\\\",\\\"channel\\\":\\\"undefined\\\",\\\"spuId\\\":\\\"10283\\\"}\",\"supplierId\":\"24633099\"}";
-
-const mtopjsonpweexcb1 = (data) =>
+const mtopjsonpweexcb = (data) =>
 {
     return data;
 };
 
-const getData = (args) => {
+const callback = 'mtopjsonpweexcb';
+
+const getData = (pid) => {
     return new Promise(function (resolve, reject) {
-        const signInfo = getSign(args);
+        const data = "{\"spuId\":\""+pid+"\",\"sceneType\":\"3C\",\"channel\":\"idle\",\"channelData\":\"{\\\"sceneType\\\":\\\"3C\\\",\\\"channel\\\":\\\"undefined\\\",\\\"spuId\\\":\\\""+pid+"\\\"}\"}";
+        const signInfo = getSign(data);
         const {sign, l ,a} = signInfo;
-        const callback = 'mtopjsonpweexcb1';
-        let url = `${domain}${detailsOpen}?jsv=${jsv}&appKey=${a}&t=${l}&sign=${sign}&api=${detailsApi}&v=${v}&ecode=${ecode}&dataType=${dataType}&jsonpIncPrefix=${jsonpIncPrefix}&ttid=${ttid}&type=${type}&callback=${callback}&data=${urlencode(args)}`;
-        console.info('url: ', url);
-        const options = {method :'GET',url : url, headers: {cookie: config.cookie}};
+        let url = `${domain}${detailsOpen}?jsv=${jsv}&appKey=${a}&t=${l}&sign=${sign}&api=${detailsApi}&v=${v}&ecode=${ecode}&dataType=${dataType}&jsonpIncPrefix=${jsonpIncPrefix}&ttid=${ttid}&type=${type}&callback=${callback}&data=${urlencode(data)}`;
+        const options = {
+            method  :'GET',
+            url     : url,
+            headers : {
+                cookie: config.cookie
+            }
+        };
         request(options, function (error, response, body) {
             if (error) reject(error);
-            let result = eval(mtopjsonpweexcb1(body));
+            let result = eval(mtopjsonpweexcb(body));
             result = JSON.stringify(result);
             resolve(result);
         });
     });
 };
 
-const getPrdouct = async () => {
+const getDetails = async (pid) => {
     try {
-        const result = await getData(detailsData);
+        const result = await getData(pid);
         const {data, ret} = JSON.parse(result);
         if(_.isEmpty(data)){
             console.warn('警告: %j', ret);
@@ -41,6 +47,33 @@ const getPrdouct = async () => {
         }
         const {prodName, questions, quoteId, quoteType, sceneType, spuId, supplierId} = data;
         console.info(`prodName: ${prodName}, quoteId: ${quoteId}, quoteType: ${quoteType}, sceneType: ${sceneType}, spuId: ${spuId}, supplierId: ${supplierId}, size: ${questions.length}, questions: %j`, questions);
+        const spu = {
+            _id         : new mongoose.Types.ObjectId,
+            pid         : pid,
+            spuId       : spuId,
+            supplierId  : supplierId,
+            prodName    : prodName,
+            quoteId     : quoteId,
+            quoteType   : quoteType,
+            sceneType   : sceneType,
+            questions   : questions
+        };
+        await new $spu(spu).save();
+    } catch (e) {
+        console.error('err: ', e);
+        return e;
+    }
+};
+
+const getAllPrdouctDetails = async () => {
+    try {
+        const spus = JSON.parse(fs.readFileSync(spuDataPath));
+        console.info(`机型总数:${spus.length}`);
+        for(let spu of spus){
+            console.info(`spuId: ${spu.spuId}, spuName: ${spu.name}`);
+            await getDetails(spu.spuId);
+        }
+        return;
     } catch (e) {
         console.error(e);
         return e;
@@ -48,4 +81,4 @@ const getPrdouct = async () => {
 };
 
 
-getPrdouct();
+exports.getAllPrdouctDetails = getAllPrdouctDetails;

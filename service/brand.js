@@ -7,7 +7,8 @@ const {getSign} = require('../util/signature');
 const {domain, baseOpen, jsv, baseApi, v, ecode, dataType, jsonpIncPrefix, ttid, type} = config.xy;
 
 // =========== Data =========== //
-const brandData = "{\"parentNavPath\":\"catId4:126862528\",\"deep\":2,\"bizCode\":\"3C\"}";
+// const brandData = "{\"parentNavPath\":\"catId4:126862528\",\"deep\":2,\"bizCode\":\"3C\"}";
+const brandData = "{\"parentNavPath\":\"catId4:126862528\",\"deep\":1,\"pageNumber\":2,\"bizCode\":\"3C\"}";
 
 const mtopjsonpweexcb1 = (data) =>
 {

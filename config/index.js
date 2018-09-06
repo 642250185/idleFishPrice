@@ -1,6 +1,17 @@
 const path = require('path');
 
 const config = {
+
+    mongodb: {
+        host: '10.0.10.63',
+        port: 27017,
+        // host: '139.199.59.214',
+        // port: 8777,
+        dbname: 'xygmPrice'
+    },
+    //默认取七天前的数据
+    defaultDay: 7,
+
     xy: {
         domain      : 'https://h5api.m.taobao.com',
 
@@ -21,17 +32,12 @@ const config = {
         ttid        : '2018%40weex_h5_0.12.12',
         type        : 'originaljsonp',
 
-        category_path: '/api/categories',
-        isbnDataPath: path.join(__dirname, '..', 'data/isbn.json'),
-        partIsbnDataPath: path.join(__dirname, '..', 'data/partIsbn.json'),
+        brandDataPath: path.join(__dirname, '..', 'data/brand.json'),
+        spuDataPath: path.join(__dirname, '..', 'data/spu.json'),
         exportPath: path.join(__dirname, '..', 'download'),
     },
     appKey: "12574478",
-    cookie: "cookie2=1098fd7b45a65d334cffa3fe548d26b7; _m_h5_tk=eeafdc018c27e1113784670ea03e1749_1536037213438; _m_h5_tk_enc=268459a564a5b8e04bd015ec9493574c; sg=523",
-    category: {
-        phone: 1,
-        tablet: 2
-    },
+    cookie: "cookie2=3a65bd6fe63a1ac2e6adabaec370d05a; _m_h5_tk=f9ff9360645c1ce2b526787f55e079b7_1536142094416; _m_h5_tk_enc=f236915c7c0d1cf79b08fe1df598dfc3; sg=523",
     /**
      * 返回或设置当前环镜
      */

@@ -3,13 +3,14 @@ const request = require('request');
 const config = require('../config');
 const {getSign} = require('../util/signature');
 
-const {domain, priceOpen, jsv, priceApi, v, ecode, dataType, jsonpIncPrefix, ttid, type} = config.xy;
+const {domain, priceOpen, jsv, priceApi, v, dataType, jsonpIncPrefix, ttid, type} = config.xy;
 
-const priceData = '{"spuId":"10283","quoteId":90428395,"questionnaire":[{"id":20037,"name":"型号","questionType":"SINGLECHOISE","required":true,"answers":[{"id":129,"name":"公开版/A1524","type":"TEXT","excludeIds":[]}]},{"id":20002,"name":"购买渠道","questionType":"SINGLECHOISE","required":true,"answers":[{"id":6,"name":"大陆国行","type":"TEXT","excludeIds":[]}]},{"id":20001,"name":"内存容量","questionType":"SINGLECHOISE","required":true,"answers":[{"id":2,"name":"16G","type":"TEXT","excludeIds":[]}]},{"id":20004,"name":"机身颜色","questionType":"SINGLECHOISE","required":true,"answers":[{"id":16,"name":"黑/灰色","type":"TEXT","excludeIds":[]}]},{"id":20012,"name":"剩余保修期","questionType":"SINGLECHOISE","required":true,"answers":[{"id":45,"name":"保修期剩余1个月以上","type":"TEXT","excludeIds":[]}]},{"id":20005,"name":"机身外壳","questionType":"SINGLECHOISE","required":true,"answers":[{"id":19,"name":"外壳完好无使用痕迹","type":"TEXT","excludeIds":[]}]},{"id":20006,"name":"屏幕外观","questionType":"SINGLECHOISE","required":true,"answers":[{"id":21,"name":"触屏完美无划痕","type":"TEXT","excludeIds":[]}]},{"id":20035,"name":"屏幕显示","questionType":"SINGLECHOISE","required":true,"answers":[{"id":114,"name":"显示正常","type":"TEXT","excludeIds":[]}]},{"id":20013,"name":"维修拆机史","questionType":"SINGLECHOISE","required":true,"answers":[{"id":47,"name":"无拆无修","type":"TEXT","excludeIds":[]}]},{"id":20003,"name":"开机情况","questionType":"SINGLECHOISE","required":true,"answers":[{"id":10,"name":"正常开机","type":"TEXT","excludeIds":[]}]},{"id":20011,"name":"iCloud账户","questionType":"SINGLECHOISE","required":true,"answers":[{"id":43,"name":"iCloud已注销","type":"TEXT","excludeIds":[]}]},{"id":9999,"name":"功能问题(可多选，如无功能问题可不选)","questionType":"MULTICHOICES","required":false,"answers":[{"id":77,"name":"有进水","type":"TEXT","excludeIds":[]}]}],"dataType":"originaljson"}';
+const prdouctList = [
+    {"spuId":"10283","quoteId":91184110,"questionnaire":[{"id":20037,"answers":[{"id":738}]},{"id":20002,"answers":[{"id":6}]},{"id":20001,"answers":[{"id":2}]},{"id":20004,"answers":[{"id":16}]},{"id":20012,"answers":[{"id":45}]},{"id":20005,"answers":[{"id":19}]},{"id":20006,"answers":[{"id":21}]},{"id":20035,"answers":[{"id":114}]},{"id":20013,"answers":[{"id":47}]},{"id":20003,"answers":[{"id":10}]},{"id":20011,"answers":[{"id":43}]},{"id":9999,"answers":[{"id":77},{"id":59}]}]},
+    {"spuId":"10284","quoteId":91184114,"questionnaire":[{"id":20037,"answers":[{"id":139}]},{"id":20002,"answers":[{"id":6}]},{"id":20001,"answers":[{"id":3}]},{"id":20004,"answers":[{"id":16}]},{"id":20012,"answers":[{"id":45}]},{"id":20005,"answers":[{"id":18}]},{"id":20006,"answers":[{"id":21}]},{"id":20035,"answers":[{"id":114}]},{"id":20013,"answers":[{"id":47}]},{"id":20003,"answers":[{"id":10}]},{"id":20011,"answers":[{"id":43}]},{"id":9999,"answers":[{"id":77},{"id":59}]}]}
+];
 
-
-const callback = (data) =>
-{
+const callback = (data) => {
     return data;
 };
 
@@ -18,7 +19,6 @@ const getData = (args) => {
         const signInfo = getSign(args);
         const {sign, l ,a} = signInfo;
         let url = `${domain}${priceOpen}`;
-        console.info('url: ', url);
         const options = {
             method  : 'POST',
             url     : url,
@@ -46,15 +46,34 @@ const getData = (args) => {
     });
 };
 
-
-const getPrice = async () => {
+const getPrice = async (priceData) => {
     try {
-        let result = await getData(priceData);
-        console.info('result: ', result);
+        let result = await getData(JSON.stringify(priceData));
+        const {data, ret} = JSON.parse(result);
+        console.info(`ret: ${ret}, data: %j`, data);
+        if(_.isEmpty(data)){
+            return -1;
+        } else {
+            return data.price;
+        }
     } catch (e) {
         console.error(e);
         return e;
     }
 };
 
-getPrice();
+
+const getAllPrdouctPrice = async () => {
+    try {
+        for(let prdouct of prdouctList){
+            const price = await getPrice(prdouct);
+            console.info('price: ', price);
+        }
+    } catch (e) {
+        console.error(e);
+        return e;
+    }
+};
+
+
+getAllPrdouctPrice();
