@@ -6,7 +6,7 @@ const config = require('../config');
 const xlsx = require('node-xlsx').default;
 const {changeIP} = require('../util/iputil');
 const {getSign} = require('../util/signature');
-const obj  = xlsx.parse('../file/enquiry.xlsx');
+const obj  = xlsx.parse('../file/tt.xlsx');
 
 const {domain, priceOpen, jsv, priceApi, v, dataType, jsonpIncPrefix, ttid, type, exportPath} = config.xy;
 
@@ -26,9 +26,13 @@ pList.shift();
 const getQuestionnaire = async (_pList) => {
     try {
         const enquiryData = [];
+        console.time('time');
         for(let item of _pList){
             const questionnaire = [];
             const {spuId, quoteId, singleStr, multipleStr} = item;
+            if(_.isEmpty(singleStr)){
+                continue;
+            }
             // 获取单选项
             const singleArray = singleStr.split(";");
             for(let singleItem of singleArray){
@@ -58,6 +62,7 @@ const getQuestionnaire = async (_pList) => {
                 questionnaire   : questionnaire
             });
         }
+        console.timeEnd('time');
         return enquiryData;
     } catch (e) {
         console.error(e);
