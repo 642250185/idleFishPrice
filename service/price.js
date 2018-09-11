@@ -3,17 +3,12 @@ const _ = require('lodash');
 const fs = require('fs-extra');
 const request = require('request');
 const config = require('../config');
-const {getSign} = require('../util/signature');
 const xlsx = require('node-xlsx').default;
-const obj  = xlsx.parse('../file/test.xlsx');
+const {changeIP} = require('../util/iputil');
+const {getSign} = require('../util/signature');
+const obj  = xlsx.parse('../file/enquiry.xlsx');
 
 const {domain, priceOpen, jsv, priceApi, v, dataType, jsonpIncPrefix, ttid, type, exportPath} = config.xy;
-
-/*const prdouctList = [
-    {"spuId":"10283","quoteId":91184110,"questionnaire":[{"id":20037,"answers":[{"id":738}]},{"id":20002,"answers":[{"id":6}]},{"id":20001,"answers":[{"id":2}]},{"id":20004,"answers":[{"id":16}]},{"id":20012,"answers":[{"id":45}]},{"id":20005,"answers":[{"id":19}]},{"id":20006,"answers":[{"id":21}]},{"id":20035,"answers":[{"id":114}]},{"id":20013,"answers":[{"id":47}]},{"id":20003,"answers":[{"id":10}]},{"id":20011,"answers":[{"id":43}]},{"id":9999,"answers":[{"id":77},{"id":59}]}]},
-    {"spuId":"10284","quoteId":91184114,"questionnaire":[{"id":20037,"answers":[{"id":139}]},{"id":20002,"answers":[{"id":6}]},{"id":20001,"answers":[{"id":3}]},{"id":20004,"answers":[{"id":16}]},{"id":20012,"answers":[{"id":45}]},{"id":20005,"answers":[{"id":18}]},{"id":20006,"answers":[{"id":21}]},{"id":20035,"answers":[{"id":114}]},{"id":20013,"answers":[{"id":47}]},{"id":20003,"answers":[{"id":10}]},{"id":20011,"answers":[{"id":43}]},{"id":9999,"answers":[{"id":77},{"id":59}]}]},
-    {"spuId":"10283","quoteId":91759181,"questionnaire":[{"id":20037,"answers":[{"id":129}]},{"id":20002,"answers":[{"id":6}]},{"id":20001,"answers":[{"id":2}]},{"id":20004,"answers":[{"id":16}]},{"id":20012,"answers":[{"id":45}]},{"id":20005,"answers":[{"id":19}]},{"id":20006,"answers":[{"id":21}]},{"id":20035,"answers":[{"id":114}]},{"id":20013,"answers":[{"id":47}]},{"id":20003,"answers":[{"id":10}]},{"id":20011,"answers":[{"id":43}]}]}
-];*/
 
 const pList = [];
 Object.keys(obj).forEach(function(key) {
@@ -148,11 +143,10 @@ const getAllPrdouctPrice = async () => {
     }
 };
 
-
 const exportPriceInfo = async () => {
     try {
         const priceData = await getAllPrdouctPrice();
-        console.info('size: %d, priceData: %j', priceData.length, priceData);
+        console.info('size: %d', priceData.length);
         const final = [];
         const header = ['pid', 'spuId', 'prodName', 'quoteId', 'price', 'remark'];
         final.push(header);

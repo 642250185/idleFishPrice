@@ -68,7 +68,7 @@ const getPrdouct = async (bid, pageNumber, plist) => {
                 });
             }
         }
-        console.info('size: %d, brandList: %j',brandList.length, brandList);
+        console.info('size: %d',brandList.length);
 
         plist = plist.concat(brandList);
         if(nextPage){

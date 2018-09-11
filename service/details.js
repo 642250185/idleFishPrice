@@ -1,3 +1,4 @@
+require('../schema');
 const _ = require('lodash');
 const fs = require('fs-extra');
 const request = require('request');
@@ -9,8 +10,7 @@ const {getSign} = require('../util/signature');
 
 const {domain, detailsOpen, jsv, detailsApi, v, ecode, dataType, jsonpIncPrefix, ttid, type, spuDataPath} = config.xy;
 
-const mtopjsonpweexcb = (data) =>
-{
+const mtopjsonpweexcb = (data) => {
     return data;
 };
 
@@ -48,7 +48,7 @@ const getDetails = async (pid) => {
             return;
         }
         const {prodName, questions, quoteId, quoteType, sceneType, spuId, supplierId} = data;
-        console.info(`prodName: ${prodName}, quoteId: ${quoteId}, quoteType: ${quoteType}, sceneType: ${sceneType}, spuId: ${spuId}, supplierId: ${supplierId}, size: ${questions.length}, questions: %j`, questions);
+        console.info(`prodName: ${prodName}, quoteId: ${quoteId}, quoteType: ${quoteType}, sceneType: ${sceneType}, spuId: ${spuId}, supplierId: ${supplierId}, size: ${questions.length}`);
         const spu = {
             _id         : new mongoose.Types.ObjectId,
             pid         : pid,
@@ -83,4 +83,5 @@ const getAllPrdouctDetails = async () => {
 };
 
 
+getAllPrdouctDetails();
 exports.getAllPrdouctDetails = getAllPrdouctDetails;

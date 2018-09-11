@@ -45,7 +45,7 @@ const getPrdoucts = async () => {
 const exportData = async () => {
     try {
         const inventoryList = await getPrdoucts();
-        console.info('size: %d, obj: %j', inventoryList.length, inventoryList);
+        console.info('size: %d', inventoryList.length);
         const final = [];
         const header = ['spuId', 'prodName', 'quoteId', 'questionId', 'questionName', 'answerId', 'answerName'];
         final.push(header);
