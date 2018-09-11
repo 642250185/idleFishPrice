@@ -6,7 +6,7 @@ const config = require('../config');
 const xlsx = require('node-xlsx').default;
 const {changeIP} = require('../util/iputil');
 const {getSign} = require('../util/signature');
-const obj  = xlsx.parse('../file/tt.xlsx');
+const obj  = xlsx.parse('../file/xygm.xlsx');
 
 const {domain, priceOpen, jsv, priceApi, v, dataType, jsonpIncPrefix, ttid, type, exportPath} = config.xy;
 
