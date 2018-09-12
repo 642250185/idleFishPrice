@@ -1,12 +1,13 @@
-require('../schema');
+require('./schema');
 const _ = require('lodash');
 const fs = require('fs-extra');
 const request = require('request');
-const config = require('../config');
+const config = require('./config');
 const xlsx = require('node-xlsx').default;
-const {changeIP} = require('../util/iputil');
-const {getSign} = require('../util/signature');
-const obj  = xlsx.parse('../file/xygm.xlsx');
+const {changeIP} = require('./util/iputil');
+const {formatDate} = require('./util/dateUtil');
+const {getSign} = require('./util/signature');
+const obj  = xlsx.parse('./file/price.xlsx');
 
 const {domain, priceOpen, jsv, priceApi, v, dataType, jsonpIncPrefix, ttid, type, exportPath} = config.xy;
 
@@ -165,8 +166,8 @@ const exportPriceInfo = async () => {
             row.push(item.remark);
             final.push(row);
         }
-        const random = Math.ceil(Math.random() * 100);
-        const filename = `${exportPath}/闲鱼估吗机型价格信息-${random}.xlsx`;
+        const currentTime = formatDate(new Date(), 'YYYY-MM-DD-HH-mm-ss');
+        const filename = `${exportPath}/闲鱼估吗机型价格信息#${currentTime}.xlsx`;
         fs.writeFileSync(filename, xlsx.build([
             {name: '闲鱼估吗机型价格数据', data: final},
         ]));

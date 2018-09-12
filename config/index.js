@@ -37,7 +37,7 @@ const config = {
         exportPath: path.join(__dirname, '..', 'download'),
     },
     appKey: "12574478",
-    cookie: "cookie2=1362ae6f37a95456ea1063691a791696; _m_h5_tk=d2340375a1ebf88d15b3b262311fefa5_1536671485862; _m_h5_tk_enc=6654706e5754489834888e2a5fed2b1a; sg=523",
+    cookie: "cookie2=1362ae6f37a95456ea1063691a791696; _m_h5_tk=531e8ffea409f5fef5f8ff00074837c8_1536741363985; _m_h5_tk_enc=6787fd12ce30ae2ffb5def543d04576a; sg=523",
     /**
      * 返回或设置当前环镜
      */
