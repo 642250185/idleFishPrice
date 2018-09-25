@@ -10,11 +10,11 @@ const {getSign} = require('../util/signature');
 
 const {domain, detailsOpen, jsv, detailsApi, v, ecode, dataType, jsonpIncPrefix, ttid, type, spuDataPath} = config.xy;
 
-const mtopjsonpweexcb = (data) => {
+const mtopjsonpweexcb1 = (data) => {
     return data;
 };
 
-const callback = 'mtopjsonpweexcb';
+const callback = 'mtopjsonpweexcb1';
 
 const getData = (pid) => {
     return new Promise(function (resolve, reject) {
@@ -31,7 +31,7 @@ const getData = (pid) => {
         };
         request(options, function (error, response, body) {
             if (error) reject(error);
-            let result = eval(mtopjsonpweexcb(body));
+            let result = eval(mtopjsonpweexcb1(body));
             result = JSON.stringify(result);
             resolve(result);
         });
