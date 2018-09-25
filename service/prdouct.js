@@ -34,7 +34,7 @@ const getData = (bid, pageNumber) => {
 
 const getPrdouct = async (bid, pageNumber, plist) => {
     try {
-        await sleep(1000 * 2);
+        // await sleep(1000 * 2);
         if(!pageNumber){
             pageNumber = 1;
             plist = [];

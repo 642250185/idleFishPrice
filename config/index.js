@@ -1,10 +1,17 @@
+const fs = require('fs');
 const path = require('path');
-
+let cookie;
+(async() => {
+    cookie = fs.readFileSync('F:/filePath/cookie.txt', 'utf8');
+    console.info('cookie: ', cookie);
+})();
 const config = {
 
     mongodb: {
-        host: '10.0.10.63',
+        host: 'localhost',
         port: 27017,
+        // host: '10.0.10.63',
+        // port: 27017,
         // host: '139.199.59.214',
         // port: 8777,
         dbname: 'xygm'
@@ -33,11 +40,12 @@ const config = {
         type        : 'originaljsonp',
 
         brandDataPath: path.join(__dirname, '..', 'data/brand.json'),
-        spuDataPath: path.join(__dirname, '..', 'data/spu-2.json'),
+        spuDataPath: path.join(__dirname, '..', 'data/spu.json'),
         exportPath: path.join(__dirname, '..', 'download'),
     },
     appKey: "12574478",
-    cookie: "cookie2=1362ae6f37a95456ea1063691a791696; _m_h5_tk=531e8ffea409f5fef5f8ff00074837c8_1536741363985; _m_h5_tk_enc=6787fd12ce30ae2ffb5def543d04576a; sg=523",
+    // cookie: `"${cookie}"`,
+    cookie: "cookie2=1472ba72c6dfaa6cefebc07ff0f6ad9a; _m_h5_tk=cbc9686eb718d56da5f40ffcec39cf67_1537866925136; _m_h5_tk_enc=9fa759fe8e12f1a00711ff37be2a189e; sg=523",
     /**
      * 返回或设置当前环镜
      */

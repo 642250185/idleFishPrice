@@ -7,11 +7,11 @@ const xlsx = require('node-xlsx').default;
 const {changeIP} = require('./util/iputil');
 const {formatDate} = require('./util/dateUtil');
 const {getSign} = require('./util/signature');
-const obj  = xlsx.parse('./file/price.xlsx');
+const obj  = xlsx.parse('./file/Y85.xlsx');
 
 const {domain, priceOpen, jsv, priceApi, v, dataType, jsonpIncPrefix, ttid, type, exportPath} = config.xy;
 
-const pList = [];
+let pList = [], success = 0, failure = 0;
 Object.keys(obj).forEach(function(key) {
     obj[key].data.forEach(function(item){
         pList.push({
@@ -113,8 +113,10 @@ const getPrice = async (priceData) => {
         const {data, ret} = JSON.parse(result);
         console.info(`ret: ${ret}, data: %j`, data);
         if(_.isEmpty(data)){
+            ++failure;
             return -1;
         } else {
+            ++success;
             return data.price;
         }
     } catch (e) {
@@ -152,7 +154,7 @@ const getAllPrdouctPrice = async () => {
 const exportPriceInfo = async () => {
     try {
         const priceData = await getAllPrdouctPrice();
-        console.info('size: %d', priceData.length);
+        console.info(`总共导出数据: ${priceData.length} 条, 成功: ${success} 条, 失败: ${failure} 条。`);
         const final = [];
         const header = ['pid', 'spuId', 'prodName', 'quoteId', 'price', 'remark'];
         final.push(header);

@@ -40,7 +40,7 @@ const getData = (pid) => {
 
 const getDetails = async (pid) => {
     try {
-        await sleep(1000 * 2);
+        // await sleep(1000 * 2);
         const result = await getData(pid);
         const {data, ret} = JSON.parse(result);
         if(_.isEmpty(data)){
@@ -74,11 +74,25 @@ const getAllPrdouctDetails = async () => {
         for(let spu of spus){
             console.info(`spuId: ${spu.spuId}, spuName: ${spu.name}`);
             await getDetails(spu.spuId);
+            // break;
         }
         return;
     } catch (e) {
         console.error(e);
         return e;
+    }
+};
+
+const getDetection = async () => {
+    try {
+        const spuIds = [1286925,1286925,1286707,1286707,1286709,1286709,1286709,1287318,1287318,1287318,1286738,1286738];
+        for(let pid of spuIds){
+            await getDetails(pid);
+            break;
+        }
+    } catch (e) {
+        console.error(e);
+        return [];
     }
 };
 
