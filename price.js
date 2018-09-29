@@ -4,10 +4,9 @@ const fs = require('fs-extra');
 const request = require('request');
 const config = require('./config');
 const xlsx = require('node-xlsx').default;
-const {changeIP} = require('./util/iputil');
 const {formatDate} = require('./util/dateUtil');
 const {getSign} = require('./util/signature');
-const obj  = xlsx.parse('./file/Y85.xlsx');
+const obj  = xlsx.parse('./file/price.xlsx');
 
 const {domain, priceOpen, jsv, priceApi, v, dataType, jsonpIncPrefix, ttid, type, exportPath} = config.xy;
 
@@ -62,6 +61,7 @@ const getQuestionnaire = async (_pList) => {
                 quoteId         : quoteId,
                 questionnaire   : questionnaire
             });
+            // console.info('enquiryData: %j',enquiryData);
         }
         console.timeEnd('time');
         return enquiryData;

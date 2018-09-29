@@ -38,7 +38,7 @@ const getData = (pid) => {
     });
 };
 
-const getDetails = async (pid) => {
+const getDetails = async (pid, bool) => {
     try {
         // await sleep(1000 * 2);
         const result = await getData(pid);
@@ -47,9 +47,9 @@ const getDetails = async (pid) => {
             console.warn('警告: %j', ret);
             return;
         }
-        const {prodName, questions, quoteId, quoteType, sceneType, spuId, supplierId} = data;
+        let {prodName, questions, quoteId, quoteType, sceneType, spuId, supplierId} = data;
         console.info(`prodName: ${prodName}, quoteId: ${quoteId}, quoteType: ${quoteType}, sceneType: ${sceneType}, spuId: ${spuId}, supplierId: ${supplierId}, size: ${questions.length}`);
-        const spu = {
+        let spu = {
             _id         : new mongoose.Types.ObjectId,
             pid         : pid,
             spuId       : spuId,
@@ -60,7 +60,15 @@ const getDetails = async (pid) => {
             sceneType   : sceneType,
             questions   : questions
         };
-        await new $spu(spu).save();
+        if(bool){
+            const spuItem = await $spu.findOne({pid: pid});
+            spuItem.quoteId = quoteId;
+            spuItem.prodName = prodName;
+            spuItem.questions = questions;
+            await spuItem.save();
+        } else {
+            await new $spu(spu).save();
+        }
     } catch (e) {
         console.error('err: ', e);
         return e;
@@ -73,8 +81,7 @@ const getAllPrdouctDetails = async () => {
         console.info(`机型总数:${spus.length}`);
         for(let spu of spus){
             console.info(`spuId: ${spu.spuId}, spuName: ${spu.name}`);
-            await getDetails(spu.spuId);
-            // break;
+            await getDetails(spu.spuId, false);
         }
         return;
     } catch (e) {
@@ -83,11 +90,12 @@ const getAllPrdouctDetails = async () => {
     }
 };
 
-const getDetection = async () => {
+// 检测
+const detection = async () => {
     try {
-        const spuIds = [1286925,1286925,1286707,1286707,1286709,1286709,1286709,1287318,1287318,1287318,1286738,1286738];
+        const spuIds = [10283];
         for(let pid of spuIds){
-            await getDetails(pid);
+            await getDetails(pid, true);
             break;
         }
     } catch (e) {
@@ -96,6 +104,6 @@ const getDetection = async () => {
     }
 };
 
-
-getAllPrdouctDetails();
+detection();
+// getAllPrdouctDetails();
 exports.getAllPrdouctDetails = getAllPrdouctDetails;

@@ -8,7 +8,7 @@ let cookie;
 const config = {
 
     mongodb: {
-        host: 'localhost',
+        host: '10.0.10.187',
         port: 27017,
         // host: '10.0.10.63',
         // port: 27017,
@@ -45,7 +45,7 @@ const config = {
     },
     appKey: "12574478",
     // cookie: `"${cookie}"`,
-    cookie: "cookie2=1472ba72c6dfaa6cefebc07ff0f6ad9a; _m_h5_tk=cbc9686eb718d56da5f40ffcec39cf67_1537866925136; _m_h5_tk_enc=9fa759fe8e12f1a00711ff37be2a189e; sg=523",
+    cookie: "cookie2=1b828230e8af55b39cd2c8af087fa0a5; _m_h5_tk=3f6ab9d43d7e1f99f729104b49b20785_1538224199536; _m_h5_tk_enc=4353062147466f8d24a07a4fe6c7f5a8; sg=523",
     /**
      * 返回或设置当前环镜
      */
