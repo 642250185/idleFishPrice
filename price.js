@@ -4,9 +4,10 @@ const fs = require('fs-extra');
 const request = require('request');
 const config = require('./config');
 const xlsx = require('node-xlsx').default;
+const sleep = require('js-sleep/js-sleep');
 const {formatDate} = require('./util/dateUtil');
 const {getSign} = require('./util/signature');
-const obj  = xlsx.parse('./file/price.xlsx');
+const obj  = xlsx.parse('./file/price8(1).xlsx');
 
 const {domain, priceOpen, jsv, priceApi, v, dataType, jsonpIncPrefix, ttid, type, exportPath} = config.xy;
 
@@ -109,6 +110,7 @@ const getData = (args) => {
 
 const getPrice = async (priceData) => {
     try {
+        await sleep(1000 * 3);
         let result = await getData(JSON.stringify(priceData));
         const {data, ret} = JSON.parse(result);
         console.info(`ret: ${ret}, data: %j`, data);

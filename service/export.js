@@ -75,7 +75,3 @@ const exportData = async () => {
 
 
 exportData();
-
-
-
-

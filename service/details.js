@@ -14,14 +14,17 @@ const mtopjsonpweexcb1 = (data) => {
     return data;
 };
 
+const supplierId = "24633099";
 const callback = 'mtopjsonpweexcb1';
 
 const getData = (pid) => {
     return new Promise(function (resolve, reject) {
-        const data = "{\"spuId\":\""+pid+"\",\"sceneType\":\"3C\",\"channel\":\"idle\",\"channelData\":\"{\\\"sceneType\\\":\\\"3C\\\",\\\"channel\\\":\\\"undefined\\\",\\\"spuId\\\":\\\""+pid+"\\\"}\"}";
+        //const data = "{\"spuId\":\""+pid+"\",\"sceneType\":\"3C\",\"channel\":\"idle\",\"channelData\":\"{\\\"sceneType\\\":\\\"3C\\\",\\\"channel\\\":\\\"undefined\\\",\\\"spuId\\\":\\\""+pid+"\\\",\\\"supplierId\\\":\\\""+supplierId+"\\\"}\"}";
+        const data = "{\"spuId\":\""+pid+"\",\"sceneType\":\"3C\",\"channel\":\"idle\",\"channelData\":\"{\\\"sceneType\\\":\\\"3C\\\",\\\"channel\\\":\\\"undefined\\\",\\\"spuId\\\":\\\"10283\\\"}\",\"supplierId\":\""+supplierId+"\"}";
         const signInfo = getSign(data);
         const {sign, l ,a} = signInfo;
-        let url = `${domain}${detailsOpen}?jsv=${jsv}&appKey=${a}&t=${l}&sign=${sign}&api=${detailsApi}&v=${v}&ecode=${ecode}&dataType=${dataType}&jsonpIncPrefix=${jsonpIncPrefix}&ttid=${ttid}&type=${type}&callback=${callback}&data=${urlencode(data)}`;
+        let url = `${domain}${detailsOpen}?jsv=${jsv}&appKey=${a}&t=${l}&sign=${sign}&api=${detailsApi}&v=${v}&dataType=${dataType}&jsonpIncPrefix=${jsonpIncPrefix}&ttid=${ttid}&type=${type}&callback=${callback}&data=${urlencode(data)}`;
+        // console.info('>>> url: ', url);
         const options = {
             method  :'GET',
             url     : url,
@@ -40,7 +43,7 @@ const getData = (pid) => {
 
 const getDetails = async (pid, bool) => {
     try {
-        // await sleep(1000 * 2);
+        await sleep(1000 * 3);
         const result = await getData(pid);
         const {data, ret} = JSON.parse(result);
         if(_.isEmpty(data)){
@@ -61,7 +64,9 @@ const getDetails = async (pid, bool) => {
             questions   : questions
         };
         if(bool){
+            console.info(`${pid} 检测......`);
             const spuItem = await $spu.findOne({pid: pid});
+            spuItem.spuId = spuId;
             spuItem.quoteId = quoteId;
             spuItem.prodName = prodName;
             spuItem.questions = questions;
@@ -93,7 +98,7 @@ const getAllPrdouctDetails = async () => {
 // 检测
 const detection = async () => {
     try {
-        const spuIds = [10283];
+        const spuIds = [1286709];
         for(let pid of spuIds){
             await getDetails(pid, true);
             break;
@@ -104,6 +109,5 @@ const detection = async () => {
     }
 };
 
-detection();
-// getAllPrdouctDetails();
+getAllPrdouctDetails();
 exports.getAllPrdouctDetails = getAllPrdouctDetails;
