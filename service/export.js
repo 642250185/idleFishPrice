@@ -17,13 +17,14 @@ const getPrdoucts = async () => {
         }
         let count = 0;
         for(let spu of spus){
-            const {pid, prodName, quoteId, questions} = spu;
+            const {pid, spuId, prodName, quoteId, questions} = spu;
             for(let item of questions){
                 const {id, name, answers} = item;
                 for(let answer of answers){
                     console.info(`count: ${++count}, pid: ${pid}, prodName: ${prodName}, quoteId: ${quoteId}, questionId: ${id}, questionName: ${name}, answerId: ${answer.id}, answerName: ${answer.name}`);
                     inventoryList.push({
-                        spuId       : pid,
+                        pid         : pid,
+                        spuId       : spuId,
                         prodName    : prodName,
                         quoteId     : quoteId,
                         questionId  : id,
@@ -47,10 +48,11 @@ const exportData = async () => {
         const inventoryList = await getPrdoucts();
         console.info('size: %d', inventoryList.length);
         const final = [];
-        const header = ['spuId', 'prodName', 'quoteId', 'questionId', 'questionName', 'answerId', 'answerName'];
+        const header = ['pid', 'spuId', 'prodName', 'quoteId', 'questionId', 'questionName', 'answerId', 'answerName'];
         final.push(header);
         for(let inventory of inventoryList){
             let row = [];
+            row.push(inventory.pid);
             row.push(inventory.spuId);
             row.push(inventory.prodName);
             row.push(inventory.quoteId);
@@ -73,5 +75,5 @@ const exportData = async () => {
     }
 };
 
-
 exportData();
+exports.exportData = exportData;

@@ -7,11 +7,11 @@ const xlsx = require('node-xlsx').default;
 const sleep = require('js-sleep/js-sleep');
 const {formatDate} = require('./util/dateUtil');
 const {getSign} = require('./util/signature');
-const obj  = xlsx.parse('./file/price8(1).xlsx');
+const obj  = xlsx.parse('./file/price9.xlsx');
 
-const {domain, priceOpen, jsv, priceApi, v, dataType, jsonpIncPrefix, ttid, type, exportPath} = config.xy;
+const {domain, priceOpen, jsv, priceApi, v, ecode, dataType, jsonpIncPrefix, ttid, type, exportPath, useCallback} = config.xy;
 
-let pList = [], success = 0, failure = 0;
+let pList = [], success = 0, failure = 0, failureList = [];
 Object.keys(obj).forEach(function(key) {
     obj[key].data.forEach(function(item){
         pList.push({
@@ -94,6 +94,8 @@ const getData = (args) => {
                 dataType        : dataType,
                 jsonpIncPrefix  : jsonpIncPrefix,
                 ttid            : ttid,
+                LoginRequest    : true,
+                H5Request       : true,
                 type            : type
             },
             headers : {'Content-Type': 'application/x-www-form-urlencoded', cookie: config.cookie},
@@ -116,12 +118,15 @@ const getPrice = async (priceData) => {
         console.info(`ret: ${ret}, data: %j`, data);
         if(_.isEmpty(data)){
             ++failure;
+            failureList.push(priceData.spuId);
             return -1;
         } else {
             ++success;
             return data.price;
         }
     } catch (e) {
+        ++failure;
+        failureList.push(priceData.spuId);
         console.error(e);
         return e;
     }
@@ -156,7 +161,7 @@ const getAllPrdouctPrice = async () => {
 const exportPriceInfo = async () => {
     try {
         const priceData = await getAllPrdouctPrice();
-        console.info(`总共导出数据: ${priceData.length} 条, 成功: ${success} 条, 失败: ${failure} 条。`);
+        console.info(`总共导出数据: ${priceData.length} 条, 成功: ${success} 条, 失败: ${failure} 条。失败列表(机型ID): %j`, failureList);
         const final = [];
         const header = ['pid', 'spuId', 'prodName', 'quoteId', 'price', 'remark'];
         final.push(header);

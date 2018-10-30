@@ -19,12 +19,10 @@ const callback = 'mtopjsonpweexcb1';
 
 const getData = (pid) => {
     return new Promise(function (resolve, reject) {
-        //const data = "{\"spuId\":\""+pid+"\",\"sceneType\":\"3C\",\"channel\":\"idle\",\"channelData\":\"{\\\"sceneType\\\":\\\"3C\\\",\\\"channel\\\":\\\"undefined\\\",\\\"spuId\\\":\\\""+pid+"\\\",\\\"supplierId\\\":\\\""+supplierId+"\\\"}\"}";
         const data = "{\"spuId\":\""+pid+"\",\"sceneType\":\"3C\",\"channel\":\"idle\",\"channelData\":\"{\\\"sceneType\\\":\\\"3C\\\",\\\"channel\\\":\\\"undefined\\\",\\\"spuId\\\":\\\"10283\\\"}\",\"supplierId\":\""+supplierId+"\"}";
         const signInfo = getSign(data);
         const {sign, l ,a} = signInfo;
         let url = `${domain}${detailsOpen}?jsv=${jsv}&appKey=${a}&t=${l}&sign=${sign}&api=${detailsApi}&v=${v}&dataType=${dataType}&jsonpIncPrefix=${jsonpIncPrefix}&ttid=${ttid}&type=${type}&callback=${callback}&data=${urlencode(data)}`;
-        // console.info('>>> url: ', url);
         const options = {
             method  :'GET',
             url     : url,
@@ -43,7 +41,7 @@ const getData = (pid) => {
 
 const getDetails = async (pid, bool) => {
     try {
-        await sleep(1000 * 3);
+        // await sleep(1000 * 3);
         const result = await getData(pid);
         const {data, ret} = JSON.parse(result);
         if(_.isEmpty(data)){
@@ -109,5 +107,5 @@ const detection = async () => {
     }
 };
 
-getAllPrdouctDetails();
+// getAllPrdouctDetails();
 exports.getAllPrdouctDetails = getAllPrdouctDetails;

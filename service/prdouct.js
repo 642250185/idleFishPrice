@@ -101,8 +101,7 @@ const getAllPrdouct = async () => {
     }
 };
 
-const crawlerProducts = async () =>
-{
+const crawlerProducts = async () => {
     try {
         const spus = await getAllPrdouct();
         console.info(`机型总量: ${spus.length}`);
@@ -115,5 +114,5 @@ const crawlerProducts = async () =>
     }
 };
 
-
-crawlerProducts();
+// crawlerProducts();
+exports.crawlerProducts = crawlerProducts;

@@ -64,5 +64,5 @@ const getBrands = async () => {
     }
 };
 
-
-getBrands();
+// getBrands();
+exports.getBrands = getBrands;
