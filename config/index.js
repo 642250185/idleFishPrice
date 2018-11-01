@@ -14,7 +14,7 @@ const config = {
         // port: 27017,
         // host: '139.199.59.214',
         // port: 8777,
-        dbname: 'xygm'
+        dbname: 'xygm2'
     },
     //默认取七天前的数据
     defaultDay: 7,
@@ -34,7 +34,8 @@ const config = {
         ecode       : 1,
         dataType    : 'originaljsonp',
         jsonpIncPrefix: 'weexcb',
-        ttid        : '2018%40weex_h5_0.12.12',
+        ttid        : '2018%40weex_h5_1.0.32',
+
         type        : 'originaljsonp',
         useCallback    : 'mtopjsonpweexcb2',
         brandDataPath: path.join(__dirname, '..', 'data/brand.json'),
@@ -43,7 +44,7 @@ const config = {
     },
     appKey: "12574478",
     // cookie: `"${cookie}"`,
-    cookie: "t=f76b9009279d7c380aa8cae916767a9d; cna=l/CDE86y82ECAbfp0xYJsnEo; munb=1046413522; WAPFDFDTGFG=%2B4cMKKP%2B8PI%2BKKw%2FL7qe51jfSGSrrwxvBTA%3D; _w_app_lg=23; tracknick=taobao642250185; lgc=taobao642250185; _m_h5_tk=a459fdec7fbefab7687abb6fb7258ad3_1540894622952; _m_h5_tk_enc=88fede013f27c8d6aaa78c89a669d1f8; cookie2=14d9db5f7703623890c2d6e06909c944; _tb_token_=f6e50568e3e18; unb=1046413522; sg=523; _l_g_=Ug%3D%3D; cookie1=V3oSAessD8DQaU11Z8kRgU%2BbzUP3vVHut4knOvmCG%2B4%3D; dnk=taobao642250185; _nk_=taobao642250185; cookie17=UoH7LXdJAJEA2w%3D%3D; ntm=0; ockeqeudmj=u5R1ESg%3D; uc3=vt3=F8dByRjP3lfd%2FJBg%2BDo%3D&id2=UoH7LXdJAJEA2w%3D%3D&nk2=F5fTsrsze6Ghvz8w7D1i&lg2=U%2BGCWk%2F75gdr5Q%3D%3D; uc1=cookie21=UIHiLt3xTIkz&cookie15=U%2BGCWk%2F75gdr5Q%3D%3D&cookie14=UoTYNk%2BoJmDkxQ%3D%3D; skt=c2af5092bd411ea4; _cc_=UIHiLt3xSw%3D%3D; csg=4e59eba8; isg=BJSUSbR3s5-69ydDihkdqKvXZdIM7bJsTe56Ey51Jp-iGTJjX_1DZj-YHVck4fAv",
+    cookie: "t=c4a3b340ad409811c801b86f7454d843; cna=l/CDE86y82ECAbfp0xYJsnEo; cookie2=18abe848db63a9f5a188b04221e22b81; v=0; _tb_token_=fb777ba768803; munb=1046413522; WAPFDFDTGFG=%2B4cMKKP%2B8PI%2BKKw%2FL7qe51jfSGSrrwxvBTA%3D; _w_app_lg=23; tracknick=taobao642250185; lgc=taobao642250185; dnk=taobao642250185; ntm=0; _m_h5_tk=9cfc48bd15da5b30c1ca366d6d6c381c_1541060854392; _m_h5_tk_enc=3ee304da12e84870ffa5ba54d67dd3d5; unb=1046413522; sg=523; _l_g_=Ug%3D%3D; cookie1=V3oSAessD8DQaU11Z8kRgU%2BbzUP3vVHut4knOvmCG%2B4%3D; _cc_=WqG3DMC9EA%3D%3D; _nk_=taobao642250185; cookie17=UoH7LXdJAJEA2w%3D%3D; ockeqeudmj=uceTr40%3D; skt=41079d862f6f2b2f; uc1=cookie21=VFC%2FuZ9ainBZ&cookie15=URm48syIIVrSKA%3D%3D&cookie14=UoTYN4HMW4P%2FKg%3D%3D; csg=85d721e2; uc3=vt3=F8dByRjNVHbhzuBTwJg%3D&id2=UoH7LXdJAJEA2w%3D%3D&nk2=F5fTsrsze6Ghvz8w7D1i&lg2=UtASsssmOIJ0bQ%3D%3D; isg=AtbWfGpakXsGAKXNJNM_Dn2tJ4zSdxAK20R4HUA_wrlUA3adqAdqwTz166UQ",
     /**
      * 返回或设置当前环镜
      */

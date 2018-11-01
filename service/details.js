@@ -22,7 +22,7 @@ const getData = (pid) => {
         const data = "{\"spuId\":\""+pid+"\",\"sceneType\":\"3C\",\"channel\":\"idle\",\"channelData\":\"{\\\"sceneType\\\":\\\"3C\\\",\\\"channel\\\":\\\"undefined\\\",\\\"spuId\\\":\\\"10283\\\"}\",\"supplierId\":\""+supplierId+"\"}";
         const signInfo = getSign(data);
         const {sign, l ,a} = signInfo;
-        let url = `${domain}${detailsOpen}?jsv=${jsv}&appKey=${a}&t=${l}&sign=${sign}&api=${detailsApi}&v=${v}&dataType=${dataType}&jsonpIncPrefix=${jsonpIncPrefix}&ttid=${ttid}&type=${type}&callback=${callback}&data=${urlencode(data)}`;
+        let url = `${domain}${detailsOpen}?jsv=${jsv}&appKey=${a}&t=${l}&sign=${sign}&api=${detailsApi}&v=${v}&dataType=${dataType}&jsonpIncPrefix=${jsonpIncPrefix}&ttid=${ttid}&LoginRequest=true&H5Request=true&type=${type}&callback=${callback}&data=${urlencode(data)}`;
         const options = {
             method  :'GET',
             url     : url,
@@ -80,11 +80,17 @@ const getDetails = async (pid, bool) => {
 
 const getAllPrdouctDetails = async () => {
     try {
+        let index = 0;
         const spus = JSON.parse(fs.readFileSync(spuDataPath));
         console.info(`机型总数:${spus.length}`);
         for(let spu of spus){
+            ++index;
             console.info(`spuId: ${spu.spuId}, spuName: ${spu.name}`);
             await getDetails(spu.spuId, false);
+            // if(index === 6){
+            //     break;
+            // }
+            // break;
         }
         return;
     } catch (e) {
@@ -107,5 +113,5 @@ const detection = async () => {
     }
 };
 
-// getAllPrdouctDetails();
+getAllPrdouctDetails();
 exports.getAllPrdouctDetails = getAllPrdouctDetails;

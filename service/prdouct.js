@@ -21,7 +21,7 @@ const getData = (bid, pageNumber) => {
         const prdouctData = "{\"parentNavPath\":\"catId4:126862528;keyProp1Id:"+bid+"\",\"hotLabel\":false,\"deep\":1,\"pageNumber\":"+pageNumber+",\"bizCode\":\"3C\"}";
         const signInfo = getSign(prdouctData);
         const {sign, l ,a} = signInfo;
-        let url = `${domain}${baseOpen}?jsv=${jsv}&appKey=${a}&t=${l}&sign=${sign}&api=${baseApi}&v=${v}&ecode=${ecode}&dataType=${dataType}&jsonpIncPrefix=${jsonpIncPrefix}&ttid=${ttid}&type=${type}&callback=${callback}&data=${urlencode(prdouctData)}`;
+        let url = `${domain}${baseOpen}?jsv=${jsv}&appKey=${a}&t=${l}&sign=${sign}&api=${baseApi}&v=${v}&ecode=${ecode}&dataType=${dataType}&jsonpIncPrefix=${jsonpIncPrefix}&ttid=${ttid}&LoginRequest=true&H5Request=true&type=${type}&callback=${callback}&data=${urlencode(prdouctData)}`;
         const options = {method :'GET',url : url, headers: {cookie: config.cookie}};
         request(options, function (error, response, body) {
             if (error) reject(error);

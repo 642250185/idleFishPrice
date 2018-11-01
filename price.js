@@ -7,7 +7,7 @@ const xlsx = require('node-xlsx').default;
 const sleep = require('js-sleep/js-sleep');
 const {formatDate} = require('./util/dateUtil');
 const {getSign} = require('./util/signature');
-const obj  = xlsx.parse('./file/price9.xlsx');
+const obj  = xlsx.parse('./file/price9(1).xlsx');
 
 const {domain, priceOpen, jsv, priceApi, v, ecode, dataType, jsonpIncPrefix, ttid, type, exportPath, useCallback} = config.xy;
 
@@ -112,7 +112,7 @@ const getData = (args) => {
 
 const getPrice = async (priceData) => {
     try {
-        await sleep(1000 * 3);
+        // await sleep(1000 * 3);
         let result = await getData(JSON.stringify(priceData));
         const {data, ret} = JSON.parse(result);
         console.info(`ret: ${ret}, data: %j`, data);
@@ -142,6 +142,11 @@ const getAllPrdouctPrice = async () => {
                 price = (price / 100).toFixed(2);
             }
             const spu = await $spu.findOne({pid: prdouct.spuId});
+            if(_.isEmpty(spu)){
+                console.warn(`${prdouct.spuId} 该机型已下架。`);
+                continue;
+            }
+            // console.info('spu: %j', spu);
             prdouctPriceList.push({
                 pid         : spu.pid,
                 spuId       : spu.spuId,
