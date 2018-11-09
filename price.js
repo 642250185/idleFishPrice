@@ -3,20 +3,20 @@ const _ = require('lodash');
 const fs = require('fs-extra');
 const request = require('request');
 const config = require('./config');
+const urlencode = require('urlencode');
 const xlsx = require('node-xlsx').default;
 const sleep = require('js-sleep/js-sleep');
 const {formatDate} = require('./util/dateUtil');
 const {getSign} = require('./util/signature');
-const obj  = xlsx.parse('./file/price9(1).xlsx');
+const obj = xlsx.parse('./file/price.xlsx');
 
-const {domain, priceOpen, jsv, priceApi, v, ecode, dataType, jsonpIncPrefix, ttid, type, exportPath, useCallback} = config.xy;
+const {domain, priceOpen, detailsOpen, jsv, priceApi, v, ecode, detailsApi, dataType, jsonpIncPrefix, ttid, type, exportPath, useCallback} = config.xy;
 
 let pList = [], success = 0, failure = 0, failureList = [];
 Object.keys(obj).forEach(function(key) {
     obj[key].data.forEach(function(item){
         pList.push({
             spuId           : item[0],
-            quoteId         : item[1],
             singleStr       : item[2],
             multipleStr     : item[3]
         });
@@ -24,13 +24,59 @@ Object.keys(obj).forEach(function(key) {
 });
 pList.shift();
 
+const mtopjsonpweexcb1 = (data) => {
+    return data;
+};
+
+const supplierId = "24633099";
+const callback2 = 'mtopjsonpweexcb1';
+
+const getDetailData = (pid) => {
+    return new Promise(function (resolve, reject) {
+        // const data = "{\"spuId\":\""+pid+"\",\"sceneType\":\"3C\",\"channel\":\"idle\",\"channelData\":\"{\\\"sceneType\\\":\\\"3C\\\",\\\"channel\\\":\\\"undefined\\\",\\\"spuId\\\":\\\"10283\\\"}\",\"supplierId\":\""+supplierId+"\"}";
+        const data = "{\"spuId\":\""+pid+"\",\"sceneType\":\"3C\",\"channel\":\"tmall-service\",\"channelData\":\"{\\\"sceneType\\\":\\\"3C\\\",\\\"xianyuRouter\\\":\\\"true\\\",\\\"channel\\\":\\\"tmall-service\\\",\\\"serviceCode\\\":\\\"old_for_new_phone\\\",\\\"subChannel\\\":\\\"xianyu\\\",\\\"spuId\\\":\\\""+pid+"\\\",\\\"popCount\\\":\\\"0\\\"}\"}";
+        const signInfo = getSign(data);
+        const {sign, l ,a} = signInfo;
+        let url = `${domain}${detailsOpen}?jsv=${jsv}&appKey=${a}&t=${l}&sign=${sign}&api=${detailsApi}&v=${v}&dataType=${dataType}&jsonpIncPrefix=${jsonpIncPrefix}&ttid=${ttid}&LoginRequest=true&H5Request=true&type=${type}&callback=${callback2}&data=${urlencode(data)}`;
+        const options = {
+            method  :'GET',
+            url     : url,
+            headers : {
+                cookie: config.cookie
+            }
+        };
+        request(options, function (error, response, body) {
+            if (error) reject(error);
+            let result = eval(mtopjsonpweexcb1(body));
+            result = JSON.stringify(result);
+            resolve(result);
+        });
+    });
+};
+
+const getDetailInfo = async (pid) => {
+    try {
+        const result = await getDetailData(pid);
+        const {data, ret} = JSON.parse(result);
+        if(_.isEmpty(data)){
+            console.warn('警告: %j', ret);
+            return;
+        }
+        let {quoteId} = data;
+        return quoteId;
+    } catch (e) {
+        console.error('err: ', e);
+        return e;
+    }
+};
+
 const getQuestionnaire = async (_pList) => {
     try {
         const enquiryData = [];
         console.time('time');
         for(let item of _pList){
             const questionnaire = [];
-            const {spuId, quoteId, singleStr, multipleStr} = item;
+            const {spuId, singleStr, multipleStr} = item;
             if(_.isEmpty(singleStr)){
                 continue;
             }
@@ -56,13 +102,13 @@ const getQuestionnaire = async (_pList) => {
                     answers: answers
                 });
             }
+            const QID = await getDetailInfo(spuId);
             // 组装
             enquiryData.push({
                 spuId           : spuId,
-                quoteId         : quoteId,
+                quoteId         : QID,
                 questionnaire   : questionnaire
             });
-            // console.info('enquiryData: %j',enquiryData);
         }
         console.timeEnd('time');
         return enquiryData;
@@ -112,7 +158,6 @@ const getData = (args) => {
 
 const getPrice = async (priceData) => {
     try {
-        // await sleep(1000 * 3);
         let result = await getData(JSON.stringify(priceData));
         const {data, ret} = JSON.parse(result);
         console.info(`ret: ${ret}, data: %j`, data);
@@ -151,7 +196,6 @@ const getAllPrdouctPrice = async () => {
                 pid         : spu.pid,
                 spuId       : spu.spuId,
                 prodName    : spu.prodName,
-                quoteId     : spu.quoteId,
                 price       : price,
                 remark      : JSON.stringify(prdouct)
             });
@@ -168,14 +212,13 @@ const exportPriceInfo = async () => {
         const priceData = await getAllPrdouctPrice();
         console.info(`总共导出数据: ${priceData.length} 条, 成功: ${success} 条, 失败: ${failure} 条。失败列表(机型ID): %j`, failureList);
         const final = [];
-        const header = ['pid', 'spuId', 'prodName', 'quoteId', 'price', 'remark'];
+        const header = ['pid', 'spuId', 'prodName', 'price', 'remark'];
         final.push(header);
         for(let item of priceData){
             let row = [];
             row.push(item.pid);
             row.push(item.spuId);
             row.push(item.prodName);
-            row.push(item.quoteId);
             row.push(item.price);
             row.push(item.remark);
             final.push(row);

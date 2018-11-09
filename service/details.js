@@ -41,7 +41,6 @@ const getData = (pid) => {
 
 const getDetails = async (pid, bool) => {
     try {
-        // await sleep(1000 * 3);
         const result = await getData(pid);
         const {data, ret} = JSON.parse(result);
         if(_.isEmpty(data)){
@@ -64,11 +63,18 @@ const getDetails = async (pid, bool) => {
         if(bool){
             console.info(`${pid} 检测......`);
             const spuItem = await $spu.findOne({pid: pid});
-            spuItem.spuId = spuId;
-            spuItem.quoteId = quoteId;
-            spuItem.prodName = prodName;
-            spuItem.questions = questions;
-            await spuItem.save();
+            console.info('spuItem: ', spuItem);
+            if(_.isEmpty(spuItem)){
+                console.warn(`不存在该机型,另行保存`);
+                await new $spu(spu).save();
+            } else {
+                console.info(`更新该机型......`);
+                spuItem.spuId = spuId;
+                spuItem.quoteId = quoteId;
+                spuItem.prodName = prodName;
+                spuItem.questions = questions;
+                await spuItem.save();
+            }
         } else {
             await new $spu(spu).save();
         }
@@ -102,7 +108,7 @@ const getAllPrdouctDetails = async () => {
 // 检测
 const detection = async () => {
     try {
-        const spuIds = [1286709];
+        const spuIds = [10206];
         for(let pid of spuIds){
             await getDetails(pid, true);
             break;
@@ -113,5 +119,5 @@ const detection = async () => {
     }
 };
 
-getAllPrdouctDetails();
+// detection();
 exports.getAllPrdouctDetails = getAllPrdouctDetails;
