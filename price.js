@@ -17,6 +17,7 @@ Object.keys(obj).forEach(function(key) {
     obj[key].data.forEach(function(item){
         pList.push({
             spuId           : item[0],
+            quoteId         : item[1],
             singleStr       : item[2],
             multipleStr     : item[3]
         });
@@ -76,7 +77,7 @@ const getQuestionnaire = async (_pList) => {
         console.time('time');
         for(let item of _pList){
             const questionnaire = [];
-            const {spuId, singleStr, multipleStr} = item;
+            const {spuId, quoteId, singleStr, multipleStr} = item;
             if(_.isEmpty(singleStr)){
                 continue;
             }
@@ -196,6 +197,7 @@ const getAllPrdouctPrice = async () => {
                 pid         : spu.pid,
                 spuId       : spu.spuId,
                 prodName    : spu.prodName,
+                quoteId     : spu.quoteId,
                 price       : price,
                 remark      : JSON.stringify(prdouct)
             });
@@ -212,13 +214,14 @@ const exportPriceInfo = async () => {
         const priceData = await getAllPrdouctPrice();
         console.info(`总共导出数据: ${priceData.length} 条, 成功: ${success} 条, 失败: ${failure} 条。失败列表(机型ID): %j`, failureList);
         const final = [];
-        const header = ['pid', 'spuId', 'prodName', 'price', 'remark'];
+        const header = ['pid', 'spuId', 'prodName', 'quoteId', 'price', 'remark'];
         final.push(header);
         for(let item of priceData){
             let row = [];
             row.push(item.pid);
             row.push(item.spuId);
             row.push(item.prodName);
+            row.push(item.quoteId);
             row.push(item.price);
             row.push(item.remark);
             final.push(row);
