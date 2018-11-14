@@ -14,7 +14,7 @@ const config = {
         // port: 27017,
         // host: '139.199.59.214',
         // port: 8777,
-        dbname: 'xygm'
+        dbname: 'xygm2'
     },
     //默认取七天前的数据
     defaultDay: 7,
@@ -44,7 +44,7 @@ const config = {
     },
     appKey: "12574478",
     // cookie: `"${cookie}"`,
-    cookie: "cna=l/CDE86y82ECAbfp0xYJsnEo; t=f86ef1a531af22a4485991b49e852325; _m_h5_tk=5e631402d3a76030c8eb22494d50e687_1541766764410; _m_h5_tk_enc=4f3a3d0b3915aa345e7326b28e66875b; cookie2=181827bbc6f6652e1c565e03dd658c41; v=0; _tb_token_=e378787bb6e0b; ockeqeudmj=nB%2Fibpw%3D; munb=1046413522; WAPFDFDTGFG=%2B4cMKKP%2B8PI%2BKKw%2FL7qe51jfSGSrrwxvBTA%3D; _w_app_lg=23; unb=1046413522; sg=523; _l_g_=Ug%3D%3D; skt=1644a2825cdbc892; uc1=cookie21=W5iHLLyFe3xm&cookie15=W5iHLLyFOGW7aA%3D%3D&cookie14=UoTYN4YwHZ2FGQ%3D%3D; cookie1=V3oSAessD8DQaU11Z8kRgU%2BbzUP3vVHut4knOvmCG%2B4%3D; csg=8bb69fcf; uc3=vt3=F8dByR%2FJyU7Av3N47%2Fs%3D&id2=UoH7LXdJAJEA2w%3D%3D&nk2=F5fTsrsze6Ghvz8w7D1i&lg2=W5iHLLyFOGW7aA%3D%3D; tracknick=taobao642250185; lgc=taobao642250185; _cc_=WqG3DMC9EA%3D%3D; dnk=taobao642250185; _nk_=taobao642250185; cookie17=UoH7LXdJAJEA2w%3D%3D; ntm=0; isg=AmpqwCC_xcBymEkBcO-LCoFJu9AG2-SOV6BU0fQjFr1IJwrh3Gs-RbBRx2nE",
+    cookie: "cna=l/CDE86y82ECAbfp0xYJsnEo; t=f86ef1a531af22a4485991b49e852325; munb=1046413522; WAPFDFDTGFG=%2B4cMKKP%2B8PI%2BKKw%2FL7qe51jfSGSrrwxvBTA%3D; _w_app_lg=23; tracknick=taobao642250185; lgc=taobao642250185; _m_h5_tk=611e1005b13f52958e9b14b290401cd7_1542012029682; _m_h5_tk_enc=bec834884c62c4e3f5cb96a20477ac84; cookie2=1a6b43f2965213cc1f654c02a085a8a2; v=0; _tb_token_=fe875a108319e; unb=1046413522; sg=523; _l_g_=Ug%3D%3D; cookie1=V3oSAessD8DQaU11Z8kRgU%2BbzUP3vVHut4knOvmCG%2B4%3D; csg=2937b80b; dnk=taobao642250185; _nk_=taobao642250185; cookie17=UoH7LXdJAJEA2w%3D%3D; ntm=0; ockeqeudmj=tygRcHY%3D; skt=c1012147b137a1c2; uc1=cookie21=WqG3DMC9FxUx&cookie15=URm48syIIVrSKA%3D%3D&cookie14=UoTYNO8RzHAmHg%3D%3D; uc3=vt3=F8dByR%2FPtXZuWhjwTwY%3D&id2=UoH7LXdJAJEA2w%3D%3D&nk2=F5fTsrsze6Ghvz8w7D1i&lg2=Vq8l%2BKCLz3%2F65A%3D%3D; _cc_=UtASsssmfA%3D%3D; isg=Avv7j7lgJOvkNRh-iZQKDfiiit9vUAXpvpvlDu241_oRTBsudSCfohmKFtb9",
     /**
      * 返回或设置当前环镜
      */
