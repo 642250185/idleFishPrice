@@ -121,5 +121,5 @@ const detection = async () => {
     }
 };
 
-getAllPrdouctDetails();
+// getAllPrdouctDetails();
 exports.getAllPrdouctDetails = getAllPrdouctDetails;

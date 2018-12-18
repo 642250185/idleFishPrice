@@ -7,13 +7,13 @@ const start = async() => {
     try {
         console.info(`开始`);
 
-        // console.info('开始采集品牌数据......');
-        // await getBrands();
-        // console.info('品牌数据采集完成......');
-        //
-        // console.info('开始采集机型数据......');
-        // await crawlerProducts();
-        // console.info('机型数据采集完成......');
+        console.info('开始采集品牌数据......');
+        await getBrands();
+        console.info('品牌数据采集完成......');
+
+        console.info('开始采集机型数据......');
+        await crawlerProducts();
+        console.info('机型数据采集完成......');
 
         console.info('开始采集机型详情数据......');
         await getAllPrdouctDetails();

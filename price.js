@@ -8,7 +8,7 @@ const xlsx = require('node-xlsx').default;
 const sleep = require('js-sleep/js-sleep');
 const {formatDate} = require('./util/dateUtil');
 const {getSign} = require('./util/signature');
-const obj = xlsx.parse('./file/price9.xlsx');
+const obj = xlsx.parse('./file/price7.xlsx');
 
 const {domain, priceOpen, detailsOpen, jsv, priceApi, v, ecode, detailsApi, dataType, jsonpIncPrefix, ttid, type, exportPath, useCallback} = config.xy;
 
