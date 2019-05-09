@@ -8,7 +8,7 @@ const xlsx = require('node-xlsx').default;
 const sleep = require('js-sleep/js-sleep');
 const {formatDate} = require('./util/dateUtil');
 const {getSign} = require('./util/signature');
-const obj = xlsx.parse('./file/price7.xlsx');
+const obj = xlsx.parse('./file/price9.xlsx');
 
 const {domain, priceOpen, detailsOpen, jsv, priceApi, v, ecode, detailsApi, dataType, jsonpIncPrefix, ttid, type, exportPath, useCallback} = config.xy;
 
@@ -36,10 +36,12 @@ const getDetailData = (pid) => {
     return new Promise(function (resolve, reject) {
         // const data = "{\"spuId\":\""+pid+"\",\"sceneType\":\"3C\",\"channel\":\"idle\",\"channelData\":\"{\\\"sceneType\\\":\\\"3C\\\",\\\"channel\\\":\\\"undefined\\\",\\\"spuId\\\":\\\"10283\\\"}\",\"supplierId\":\""+supplierId+"\"}";
         // const data = "{\"spuId\":\""+pid+"\",\"sceneType\":\"3C\",\"channel\":\"tmall-service\",\"channelData\":\"{\\\"sceneType\\\":\\\"3C\\\",\\\"xianyuRouter\\\":\\\"true\\\",\\\"channel\\\":\\\"tmall-service\\\",\\\"serviceCode\\\":\\\"old_for_new_phone\\\",\\\"subChannel\\\":\\\"xianyu\\\",\\\"spuId\\\":\\\""+pid+"\\\",\\\"popCount\\\":\\\"0\\\"}\"}";
-           const data = "{\"spuId\":\""+pid+"\",\"sceneType\":\"3C\",\"channel\":\"tmall-service\",\"channelData\":\"{\\\"sceneType\\\":\\\"3C\\\",\\\"xianyuRouter\\\":\\\"true\\\",\\\"channel\\\":\\\"tmall-service\\\",\\\"serviceCode\\\":\\\"old_for_new_phone\\\",\\\"subChannel\\\":\\\"xianyuapp\\\",\\\"spuId\\\":\\\""+pid+"\\\",\\\"popCount\\\":\\\"0\\\"}\",\"supplierId\":\""+supplierId+"\"}";
+        // const data = "{\"spuId\":\""+pid+"\",\"sceneType\":\"3C\",\"channel\":\"tmall-service\",\"channelData\":\"{\\\"sceneType\\\":\\\"3C\\\",\\\"xianyuRouter\\\":\\\"true\\\",\\\"channel\\\":\\\"tmall-service\\\",\\\"serviceCode\\\":\\\"old_for_new_phone\\\",\\\"subChannel\\\":\\\"xianyuapp\\\",\\\"spuId\\\":\\\""+pid+"\\\",\\\"popCount\\\":\\\"0\\\"}\",\"supplierId\":\""+supplierId+"\"}";
+        const data = "{\"spuId\":\""+pid+"\",\"sceneType\":\"3C\",\"channel\":\"idle\",\"channelData\":\"{\\\"sceneType\\\":\\\"3C\\\",\\\"channel\\\":\\\"idle\\\",\\\"spuId\\\":\\\""+pid+"\\\"}\",\"supplierId\":\""+supplierId+"\"}";
         const signInfo = getSign(data);
         const {sign, l ,a} = signInfo;
-        let url = `${domain}${detailsOpen}?jsv=${jsv}&appKey=${a}&t=${l}&sign=${sign}&api=${detailsApi}&v=${v}&dataType=${dataType}&jsonpIncPrefix=${jsonpIncPrefix}&ttid=${ttid}&LoginRequest=true&H5Request=true&type=${type}&callback=${callback2}&data=${urlencode(data)}`;
+        //let url = `${domain}${detailsOpen}?jsv=${jsv}&appKey=${a}&t=${l}&sign=${sign}&api=${detailsApi}&v=${v}&dataType=${dataType}&jsonpIncPrefix=${jsonpIncPrefix}&ttid=${ttid}&LoginRequest=true&H5Request=true&type=${type}&callback=${callback2}&data=${urlencode(data)}`;
+        let url = `${domain}${detailsOpen}?jsv=${jsv}&appKey=${a}&t=${l}&sign=${sign}&api=${detailsApi}&v=${v}&dataType=${dataType}&jsonpIncPrefix=${jsonpIncPrefix}&ttid=${ttid}&type=${type}&callback=${callback2}&data=${urlencode(data)}`;
         const options = {
             method  :'GET',
             url     : url,
@@ -127,7 +129,9 @@ const callback = (data) => {
 const getData = (args) => {
     return new Promise(function (resolve, reject) {
         const signInfo = getSign(args);
+
         const {sign, l ,a} = signInfo;
+        console.info(`sign: ${sign}, l: ${l}, a: ${a}`);
         let url = `${domain}${priceOpen}`;
         const options = {
             method  : 'POST',
@@ -184,6 +188,7 @@ const getAllPrdouctPrice = async () => {
         const prdouctPriceList = [];
         const prdouctList = await getQuestionnaire(pList);
         for(let prdouct of prdouctList){
+            // console.info('prdouct: %j', prdouct);
             let price = await getPrice(prdouct);
             if(price != -1){
                 price = (price / 100).toFixed(2);

@@ -75,5 +75,5 @@ const exportData = async () => {
     }
 };
 
-// exportData();
+
 exports.exportData = exportData;

@@ -1,20 +1,20 @@
 const fs = require('fs');
 const path = require('path');
 let cookie;
-(async() => {
-    cookie = fs.readFileSync('F:/filePath/cookie.txt', 'utf8');
-    console.info('cookie: ', cookie);
-})();
+//(async() => {
+//    cookie = fs.readFileSync('F:/filePath/cookie.txt', 'utf8');
+//    console.info('cookie: ', cookie);
+//})();
 const config = {
 
     mongodb: {
-        host: '10.0.10.230',
-        port: 27017,
+        // host: '10.0.10.230',
+        // port: 27017,
         // host: '10.0.10.63',
         // port: 27017,
-        // host: '139.199.59.214',
-        // port: 8777,
-        dbname: 'xygm3'
+        host: '127.0.0.1',
+        port: 8777,
+        dbname: 'xygm'
     },
     //默认取七天前的数据
     defaultDay: 7,
@@ -25,7 +25,7 @@ const config = {
 
         priceOpen   : '/h5/mtop.alibaba.idle.recycle.quote.get/1.0/',
 
-        jsv         : '2.4.16',
+        jsv         : '2.4.2',
         baseApi     : 'mtop.taobao.idle.recycle.nextSpuNav.get',
         detailsApi  : 'mtop.alibaba.idle.recycle.quote.template',
         priceApi    : 'mtop.alibaba.idle.recycle.quote.get',
@@ -44,7 +44,7 @@ const config = {
     },
     appKey: "12574478",
     // cookie: `"${cookie}"`,
-    cookie: "t=2205c3dd3fe7baf9ca7e7727d0e34284; cna=l/CDE86y82ECAbfp0xYJsnEo; WAPFDFDTGFG=%2B4cMKKP%2B8PI%2BKKw%2FL7qe51jfSGSrrwxvBTA%3D; _w_app_lg=23; tracknick=taobao642250185; lgc=taobao642250185; tg=0; hng=CN%7Czh-cn%7CCNY; munb=1046413522; _m_h5_tk=74e90fd48e83b5ec9790d65d378df876_1545110601507; _m_h5_tk_enc=6128e660f95510f2740c68da16debb09; cookie2=1f5205c3c5eb547922f05c472c924d15; v=0; _tb_token_=5b5635eb91d33; unb=1046413522; sg=523; _l_g_=Ug%3D%3D; cookie1=V3oSAessD8DQaU11Z8kRgU%2BbzUP3vVHut4knOvmCG%2B4%3D; dnk=taobao642250185; _nk_=taobao642250185; cookie17=UoH7LXdJAJEA2w%3D%3D; ntm=0; ockeqeudmj=oQ8l0CI%3D; skt=bb910f8573a68304; uc1=cookie21=V32FPkk%2FgPzW&cookie15=V32FPkk%2Fw0dUvg%3D%3D&cookie14=UoTYM8dWZ5xvQQ%3D%3D; csg=780f2dec; uc3=vt3=F8dByRzMW2VG2EnDay0%3D&id2=UoH7LXdJAJEA2w%3D%3D&nk2=F5fTsrsze6Ghvz8w7D1i&lg2=WqG3DMC9VAQiUQ%3D%3D; _cc_=VT5L2FSpdA%3D%3D; l=aBdv2Ko1yFP2AmoXkMazgSGnSVtxSMZzpcaX1MaLmTqkdOg3eMOctKnoVMzO0zcOJyLyow6CqUEw.; isg=Avf3m5-PZ9bLTOSKbajOUeT2hutLvMH4Em95mkmkE0Yt-Bc6UYxbbrXeqmJZ",
+    cookie: "t=bb6860159f0d95c0a1074e8b90ef1cc0; cna=c6dKFYG/uGgCAbfp0xblPKVY; ntm=0; munb=1006183628; WAPFDFDTGFG=%2B4cMKKP%2B8PI%2BugEKlLP1Z2Xfi%2BKrhKwI4g%3D%3D; _w_app_lg=0; tracknick=%5Cu6DD8%5Cu76AE%5Cu732A26%5Cu53F7; lgc=%5Cu6DD8%5Cu76AE%5Cu732A26%5Cu53F7; _m_h5_tk=a3a537a94e0319448eb3b9f0453717df_1557397157305; _m_h5_tk_enc=d83a784ab4dff983e9f3fbb050776ca1; cookie2=7f28662d8b66390cb75824c3e0d365ce; v=0; _tb_token_=e9359be83b8e3; ockeqeudmj=g6n3nk0%3D; unb=1006183628; sg=%E5%8F%B788; _l_g_=Ug%3D%3D; skt=81e4241cee00aa39; uc1=cookie21=WqG3DMC9Fb5nXeCVNodw&cookie15=Vq8l%2BKCLz3%2F65A%3D%3D&cookie14=UoTZ48ZmtgSS5w%3D%3D; cookie1=AVYqrj%2Fp%2BsaNCndphJuHORW06ScoqCzgMwDWYNgPr3s%3D; csg=aa1b515b; uc3=vt3=F8dByEa%2BoAASrLaco%2Fw%3D&id2=UoH%2FYEUugPBkSA%3D%3D&nk2=r4H338X4z4KZfQ%3D%3D&lg2=U%2BGCWk%2F75gdr5Q%3D%3D; _cc_=VFC%2FuZ9ajQ%3D%3D; dnk=%5Cu6DD8%5Cu76AE%5Cu732A26%5Cu53F7; _nk_=%5Cu6DD8%5Cu76AE%5Cu732A26%5Cu53F7; cookie17=UoH%2FYEUugPBkSA%3D%3D; l=bBPYr1luvZWm7WsTBOCiSZZPh_7OSIRAguWbaRV6i_5QQ6T_aH_OlK0SOF96Vj5RsyLp4IFj7Ty9-etk9; isg=AgAA_xSISBDQ5zQEkwYMfYy10Y7Yie67Rc7W93qRzJuu9aAfIpm049bNfWfK",
     /**
      * 返回或设置当前环镜
      */

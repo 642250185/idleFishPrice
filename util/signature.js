@@ -179,7 +179,7 @@ const getSign = (data) => {
         const token = getToken();
         const l = (new Date).getTime();
         const sign = s(token+"&"+l+"&"+a+"&"+`${data}`);
-        console.info(`token: ${token}, sign: ${sign}, l: ${l}, a: ${a}`);
+        //console.info(`token: ${token}, sign: ${sign}, l: ${l}, a: ${a}`);
         return {sign, l , a}
     } catch (e) {
         console.error(e);

@@ -46,7 +46,7 @@ const getPrdouct = async (bid, pageNumber, plist) => {
             return;
         }
         const {items, nextPage, serverTime, totalCount} = data;
-        console.info(`ret: ${ret}, nextPage: ${nextPage}, serverTime: ${serverTime}, totalCount: ${totalCount}`);
+        //console.info(`ret: ${ret}, nextPage: ${nextPage}, serverTime: ${serverTime}, totalCount: ${totalCount}`);
         if(totalCount === 0){
             console.info('重复调用......');
             pageNumber++;
@@ -92,7 +92,6 @@ const getAllPrdouct = async () => {
             console.info(`品牌ID: ${brand.id}、品牌名称: ${brand.name}`);
             const result = await getPrdouct(brand.id);
             final = final.concat(result);
-            // break;
         }
         return final;
     } catch (e) {
@@ -114,5 +113,5 @@ const crawlerProducts = async () => {
     }
 };
 
-// crawlerProducts();
+
 exports.crawlerProducts = crawlerProducts;

@@ -41,7 +41,7 @@ const getBrands = async () => {
             return;
         }
         const {items, nextPage, serverTime, totalCount} = data;
-        console.info(`ret: ${ret}, nextPage: ${nextPage}, serverTime: ${serverTime}, totalCount: ${totalCount}`);
+        //console.info(`ret: ${ret}, nextPage: ${nextPage}, serverTime: ${serverTime}, totalCount: ${totalCount}`);
         let brandList = [];
         for(let brand of items){
             if(!brand.hotLabel){
@@ -64,5 +64,6 @@ const getBrands = async () => {
     }
 };
 
-// getBrands();
+
+getBrands()
 exports.getBrands = getBrands;
