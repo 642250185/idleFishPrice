@@ -154,7 +154,7 @@ const s = (e) => {
     return (d(A) + d(w) + d(v) + d(b)).toLowerCase()
 };
 
-const getToken = () => {
+const getToken = async() => {
     let result = "";
     try {
         const mh5tk = " _m_h5_tk";
@@ -173,13 +173,13 @@ const getToken = () => {
     }
 };
 
-const getSign = (data) => {
+const getSign = async(data) => {
     try {
         const a = config.appKey;
-        const token = getToken();
+        const token = await getToken();
         const l = (new Date).getTime();
         const sign = s(token+"&"+l+"&"+a+"&"+`${data}`);
-        //console.info(`token: ${token}, sign: ${sign}, l: ${l}, a: ${a}`);
+        // console.info(`token: ${token}, sign: ${sign}, l: ${l}, a: ${a}`);
         return {sign, l , a}
     } catch (e) {
         console.error(e);

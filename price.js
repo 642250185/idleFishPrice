@@ -12,18 +12,29 @@ const obj = xlsx.parse('./file/price9.xlsx');
 
 const {domain, priceOpen, detailsOpen, jsv, priceApi, v, ecode, detailsApi, dataType, jsonpIncPrefix, ttid, type, exportPath, useCallback} = config.xy;
 
-let pList = [], success = 0, failure = 0, failureList = [];
-Object.keys(obj).forEach(function(key) {
-    obj[key].data.forEach(function(item){
-        pList.push({
-            spuId           : item[0],
-            quoteId         : item[1],
-            singleStr       : item[2],
-            multipleStr     : item[3]
+let success = 0, failure = 0, failureList = [];
+
+const readTemplate = async() => {
+    try {
+        let pList = [];
+        Object.keys(obj).forEach(function(key) {
+            obj[key].data.forEach(function(item){
+                pList.push({
+                    spuId           : item[0],
+                    quoteId         : item[1],
+                    singleStr       : item[2],
+                    multipleStr     : item[3]
+                });
+            });
         });
-    });
-});
-pList.shift();
+        pList.shift();
+        return pList;
+    } catch (e) {
+        console.error(e);
+        return e;
+    }
+};
+
 
 const mtopjsonpweexcb1 = (data) => {
     return data;
@@ -32,15 +43,14 @@ const mtopjsonpweexcb1 = (data) => {
 const supplierId = "24633099";
 const callback2 = 'mtopjsonpweexcb1';
 
-const getDetailData = (pid) => {
-    return new Promise(function (resolve, reject) {
+const getDetailData = async(pid) => {
+    return new Promise(async (resolve, reject) => {
         // const data = "{\"spuId\":\""+pid+"\",\"sceneType\":\"3C\",\"channel\":\"idle\",\"channelData\":\"{\\\"sceneType\\\":\\\"3C\\\",\\\"channel\\\":\\\"undefined\\\",\\\"spuId\\\":\\\"10283\\\"}\",\"supplierId\":\""+supplierId+"\"}";
         // const data = "{\"spuId\":\""+pid+"\",\"sceneType\":\"3C\",\"channel\":\"tmall-service\",\"channelData\":\"{\\\"sceneType\\\":\\\"3C\\\",\\\"xianyuRouter\\\":\\\"true\\\",\\\"channel\\\":\\\"tmall-service\\\",\\\"serviceCode\\\":\\\"old_for_new_phone\\\",\\\"subChannel\\\":\\\"xianyu\\\",\\\"spuId\\\":\\\""+pid+"\\\",\\\"popCount\\\":\\\"0\\\"}\"}";
         // const data = "{\"spuId\":\""+pid+"\",\"sceneType\":\"3C\",\"channel\":\"tmall-service\",\"channelData\":\"{\\\"sceneType\\\":\\\"3C\\\",\\\"xianyuRouter\\\":\\\"true\\\",\\\"channel\\\":\\\"tmall-service\\\",\\\"serviceCode\\\":\\\"old_for_new_phone\\\",\\\"subChannel\\\":\\\"xianyuapp\\\",\\\"spuId\\\":\\\""+pid+"\\\",\\\"popCount\\\":\\\"0\\\"}\",\"supplierId\":\""+supplierId+"\"}";
         const data = "{\"spuId\":\""+pid+"\",\"sceneType\":\"3C\",\"channel\":\"idle\",\"channelData\":\"{\\\"sceneType\\\":\\\"3C\\\",\\\"channel\\\":\\\"idle\\\",\\\"spuId\\\":\\\""+pid+"\\\"}\",\"supplierId\":\""+supplierId+"\"}";
-        const signInfo = getSign(data);
+        const signInfo = await getSign(data);
         const {sign, l ,a} = signInfo;
-        //let url = `${domain}${detailsOpen}?jsv=${jsv}&appKey=${a}&t=${l}&sign=${sign}&api=${detailsApi}&v=${v}&dataType=${dataType}&jsonpIncPrefix=${jsonpIncPrefix}&ttid=${ttid}&LoginRequest=true&H5Request=true&type=${type}&callback=${callback2}&data=${urlencode(data)}`;
         let url = `${domain}${detailsOpen}?jsv=${jsv}&appKey=${a}&t=${l}&sign=${sign}&api=${detailsApi}&v=${v}&dataType=${dataType}&jsonpIncPrefix=${jsonpIncPrefix}&ttid=${ttid}&type=${type}&callback=${callback2}&data=${urlencode(data)}`;
         const options = {
             method  :'GET',
@@ -76,9 +86,11 @@ const getDetailInfo = async (pid) => {
 
 const getQuestionnaire = async (_pList) => {
     try {
+        let num = 0;
         const enquiryData = [];
         console.time('time');
         for(let item of _pList){
+            ++num;
             const questionnaire = [];
             const {spuId, quoteId, singleStr, multipleStr} = item;
             if(_.isEmpty(singleStr)){
@@ -113,6 +125,7 @@ const getQuestionnaire = async (_pList) => {
                 quoteId         : QID,
                 questionnaire   : questionnaire
             });
+            console.info(`[${num}] 正在获取询价参数 >> 机型ID: ${spuId}, 报价ID: ${QID}`);
         }
         console.timeEnd('time');
         return enquiryData;
@@ -127,11 +140,9 @@ const callback = (data) => {
 };
 
 const getData = (args) => {
-    return new Promise(function (resolve, reject) {
-        const signInfo = getSign(args);
-
+    return new Promise(async (resolve, reject) => {
+        const signInfo = await getSign(args);
         const {sign, l ,a} = signInfo;
-        console.info(`sign: ${sign}, l: ${l}, a: ${a}`);
         let url = `${domain}${priceOpen}`;
         const options = {
             method  : 'POST',
@@ -162,11 +173,13 @@ const getData = (args) => {
     });
 };
 
+let numbers = 0;
 const getPrice = async (priceData) => {
     try {
+        ++numbers;
         let result = await getData(JSON.stringify(priceData));
         const {data, ret} = JSON.parse(result);
-        console.info(`ret: ${ret}, data: %j`, data);
+        console.info(`[${numbers}], ret: ${ret}, data: %j`, data);
         if(_.isEmpty(data)){
             ++failure;
             failureList.push(priceData.spuId);
@@ -186,9 +199,10 @@ const getPrice = async (priceData) => {
 const getAllPrdouctPrice = async () => {
     try {
         const prdouctPriceList = [];
+        const pList = await readTemplate();
         const prdouctList = await getQuestionnaire(pList);
+        console.info('开始采集价格, 产品总量: ', prdouctList.length);
         for(let prdouct of prdouctList){
-            // console.info('prdouct: %j', prdouct);
             let price = await getPrice(prdouct);
             if(price != -1){
                 price = (price / 100).toFixed(2);

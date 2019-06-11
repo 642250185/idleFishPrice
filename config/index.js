@@ -1,10 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-let cookie;
-//(async() => {
-//    cookie = fs.readFileSync('F:/filePath/cookie.txt', 'utf8');
-//    console.info('cookie: ', cookie);
-//})();
+
 const config = {
 
     mongodb: {
@@ -12,7 +8,7 @@ const config = {
         // port: 27017,
         // host: '10.0.10.63',
         // port: 27017,
-        host: '127.0.0.1',
+        host: '139.199.59.214',
         port: 8777,
         dbname: 'xygm'
     },
@@ -43,8 +39,8 @@ const config = {
         exportPath: path.join(__dirname, '..', 'download'),
     },
     appKey: "12574478",
-    // cookie: `"${cookie}"`,
-    cookie: "t=bb6860159f0d95c0a1074e8b90ef1cc0; cna=c6dKFYG/uGgCAbfp0xblPKVY; ntm=0; munb=1006183628; WAPFDFDTGFG=%2B4cMKKP%2B8PI%2BugEKlLP1Z2Xfi%2BKrhKwI4g%3D%3D; _w_app_lg=0; tracknick=%5Cu6DD8%5Cu76AE%5Cu732A26%5Cu53F7; lgc=%5Cu6DD8%5Cu76AE%5Cu732A26%5Cu53F7; _m_h5_tk=a3a537a94e0319448eb3b9f0453717df_1557397157305; _m_h5_tk_enc=d83a784ab4dff983e9f3fbb050776ca1; cookie2=7f28662d8b66390cb75824c3e0d365ce; v=0; _tb_token_=e9359be83b8e3; ockeqeudmj=g6n3nk0%3D; unb=1006183628; sg=%E5%8F%B788; _l_g_=Ug%3D%3D; skt=81e4241cee00aa39; uc1=cookie21=WqG3DMC9Fb5nXeCVNodw&cookie15=Vq8l%2BKCLz3%2F65A%3D%3D&cookie14=UoTZ48ZmtgSS5w%3D%3D; cookie1=AVYqrj%2Fp%2BsaNCndphJuHORW06ScoqCzgMwDWYNgPr3s%3D; csg=aa1b515b; uc3=vt3=F8dByEa%2BoAASrLaco%2Fw%3D&id2=UoH%2FYEUugPBkSA%3D%3D&nk2=r4H338X4z4KZfQ%3D%3D&lg2=U%2BGCWk%2F75gdr5Q%3D%3D; _cc_=VFC%2FuZ9ajQ%3D%3D; dnk=%5Cu6DD8%5Cu76AE%5Cu732A26%5Cu53F7; _nk_=%5Cu6DD8%5Cu76AE%5Cu732A26%5Cu53F7; cookie17=UoH%2FYEUugPBkSA%3D%3D; l=bBPYr1luvZWm7WsTBOCiSZZPh_7OSIRAguWbaRV6i_5QQ6T_aH_OlK0SOF96Vj5RsyLp4IFj7Ty9-etk9; isg=AgAA_xSISBDQ5zQEkwYMfYy10Y7Yie67Rc7W93qRzJuu9aAfIpm049bNfWfK",
+
+    cookie: "t=131b5ade8e6117a2e4bb9fd72c099d82; cna=2DY0FVqAAHoCAbfp0xZeG7md; WAPFDFDTGFG=%2B4cMKKP%2B8PI%2BKKw%2FL7qe51jfSGSrrwxvBTA%3D; _w_app_lg=23; tracknick=taobao642250185; lgc=taobao642250185; miid=1306643972157687963; munb=1046413522; ntm=0; _m_h5_tk=f4d9707363fad492c4d32bda8bcf2fb8_1560169496139; _m_h5_tk_enc=4cc9ce87dcd1445f24a23437b419547e; l=bBLG1z0RvCAYVEi0BOCN5ZZPhzb9RIRAguWbaRm6i_5ZV6T6uM_OleJBEF96Vj5R_aLB4KzBhYe9-etl2; cookie2=1be3822a2d70c4f2f4382a252c053f9c; _tb_token_=f53d536eb7457; v=0; ockeqeudmj=r7ZzkkI%3D; unb=1046413522; sg=523; _l_g_=Ug%3D%3D; skt=4017b296ccfbabb8; uc1=cookie21=UtASsssme%2BBq&cookie15=WqG3DMC9VAQiUQ%3D%3D&cookie14=UoTaGOn2Ag0PJw%3D%3D; cookie1=V3oSAessD8DQaU11Z8kRgU%2BbzUP3vVHut4knOvmCG%2B4%3D; csg=6e5d5a58; uc3=vt3=F8dBy3jddGPMuyXcmcE%3D&id2=UoH7LXdJAJEA2w%3D%3D&nk2=F5fTsrsze6Ghvz8w7D1i&lg2=VFC%2FuZ9ayeYq2g%3D%3D; _cc_=UtASsssmfA%3D%3D; dnk=taobao642250185; _nk_=taobao642250185; cookie17=UoH7LXdJAJEA2w%3D%3D; isg=BNfX-NX7R9BWsMMc8-Fe_E4kZksrHKGYRlPBUikE8qYNWPaaMezMzgFmvL5jsIP2",
     /**
      * 返回或设置当前环镜
      */
